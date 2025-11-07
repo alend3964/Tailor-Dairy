@@ -1,17 +1,39 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
+  const users = [
+    { username: "admin", password: "admin123", role: "admin" },
+    { username: "staff1", password: "staff123", role: "staff" },
+    { username: "staff2", password: "staff456", role: "staff" },
+    ];
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     console.log("Attempting login:", { userId, password });
 
     // Later: Add logic to check if userId starts with "STF" => staff login
     // else => admin login
+    const user = users.find(
+      (u) => u.username === userId && u.password === password
+    );
+
+    if (user) {
+      // Redirect based on role
+      if (user.role === "admin") router.push("/admin-dashboard");
+      else router.push("/staff-dashboard");
+    } else {
+      setError("Invalid username or password");
+    }
   };
 
   return (

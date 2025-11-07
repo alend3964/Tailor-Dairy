@@ -1,0 +1,3 @@
+export default function AdminDashboard() {
+  return <h1 className="text-center text-3xl mt-40 text-black">Welcome, Admin!</h1>;
+}
